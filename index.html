@@ -20,6 +20,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <script>if (location.hash.indexOf('#all-projects') === 0) document.documentElement.classList.add('view-projects');</script>
   <style>
     :root {
       --bg:#090e12; --bg2:#0b1216; --panel:#101a1d; --panel2:#121e21;
@@ -505,8 +506,22 @@
     @media(prefers-reduced-motion:reduce){.project-card:target,.featured:target{animation:none}}
 
     /* ===== All projects (merged from projects.html) ===== */
-    .ap-section{border-bottom:1px solid var(--border);position:relative}
-    .ap-toolbar{position:sticky;top:78px;z-index:50;background:rgba(9,14,18,.92);backdrop-filter:blur(14px);border-block:1px solid var(--border);margin:0 0 4px}
+    /* page switching: home sections OR the all-projects page, never both */
+    html:not(.view-projects) #all-projects{display:none}
+    html.view-projects main>:not(#all-projects){display:none!important}
+    .ap-intro{position:relative;overflow:hidden;border-bottom:1px solid var(--border);padding:64px 0 50px}
+    .ap-intro:before{content:'';position:absolute;top:-360px;right:-300px;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(45,107,83,.15) 0%,transparent 68%);pointer-events:none}
+    .ap-back{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:#a3b6ac;font-size:13px;font-weight:600;margin-bottom:18px}
+    .ap-back:hover{color:var(--green)}
+    .ap-intro h1{font:600 clamp(40px,5vw,68px)/1.06 var(--font-head);letter-spacing:-.055em;margin:0 0 18px;max-width:760px}
+    .ap-intro h1 em{font-style:normal;color:var(--green)}
+    .ap-intro p{color:#a9b9b1;font-size:17px;line-height:1.75;max-width:600px;margin:0}
+    .ap-cta{border-top:1px solid var(--border);background:#0b1114;padding:80px 0}
+    .ap-cta-box{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;padding:44px 48px;border:1px solid rgba(176,242,202,.23);border-radius:15px;background:radial-gradient(ellipse at 88% 12%,rgba(96,193,133,.12),transparent 41%),linear-gradient(120deg,#142321,#0c1718)}
+    .ap-cta-box h2{font:600 clamp(28px,3.2vw,42px)/1.15 var(--font-head);letter-spacing:-.045em;margin:0 0 8px}
+    .ap-cta-box h2 em{font-style:normal;color:var(--green)}
+    .ap-cta-box p{margin:0;color:#a9bbb2;max-width:520px}
+    .ap-toolbar{position:sticky;top:78px;z-index:50;background:rgba(9,14,18,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
     .ap-toolbar-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 0;flex-wrap:wrap}
     .ap-filters{display:flex;gap:8px;flex-wrap:wrap}
     .ap-filter{display:inline-flex;align-items:center;gap:8px;min-height:40px;background:transparent;color:#a9bab2;padding:8px 15px;border-radius:999px;border:1px solid var(--border-strong);font-size:13px;font-weight:700;transition:all .2s}
@@ -519,12 +534,12 @@
     .ap-search input::placeholder{color:#7f9a8e}
     .ap-search input:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px rgba(176,242,202,.15)}
     .ap-results{color:#8fa79c;font-size:13px;margin:24px 0 18px}
-    .ap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .ap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding-bottom:96px}
     .ap-card{display:flex;flex-direction:column;min-width:0;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:#111b1e;transition:transform .25s,border-color .25s}
     .ap-card:hover{transform:translateY(-4px);border-color:rgba(176,242,202,.32)}
     .ap-card.is-featured{border-color:rgba(176,242,202,.3)}
-    .ap-thumb{position:relative;display:block;width:100%;aspect-ratio:16/10;padding:0;border:0;border-bottom:1px solid var(--border);background:#0d1417;overflow:hidden;cursor:pointer}
-    .ap-thumb img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .4s}
+    .ap-thumb{position:relative;display:block;width:100%;aspect-ratio:16/9;padding:0;border:0;border-bottom:1px solid var(--border);background:#0d1417;overflow:hidden;cursor:pointer}
+    .ap-thumb img{display:block;width:100%;height:100%;object-fit:contain;object-position:center!important;transition:transform .4s}
     .ap-card:hover .ap-thumb img{transform:scale(1.03)}
     .ap-thumb-empty{position:absolute;inset:0;display:grid;place-items:center;background:#122120 radial-gradient(rgba(174,244,199,.12) 1px,transparent 1px) 0 0/19px 19px}
     .ap-thumb-empty span{display:grid;place-items:center;width:64px;height:64px;border-radius:16px;background:rgba(176,242,202,.1);border:1px solid rgba(176,242,202,.25);color:var(--green);font:700 26px var(--font-head)}
@@ -577,9 +592,25 @@
       .ap-filters{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:2px;scrollbar-width:none}.ap-filters::-webkit-scrollbar{display:none}
       .ap-filter{flex:none;min-height:42px}
       .ap-search{flex:1 1 100%}
-      .ap-grid{grid-template-columns:1fr}
+      .ap-grid{grid-template-columns:1fr;padding-bottom:64px}
+      .ap-intro{padding:40px 0 36px}.ap-intro p{font-size:15px}
+      .ap-cta{padding:56px 0}.ap-cta-box{padding:32px 24px}.ap-cta-box .btn{width:100%}
       .ap-d-body{padding:24px 22px 26px}.ap-d-body h2{font-size:26px}.ap-psr li{grid-template-columns:1fr;gap:2px}.ap-d-cta .btn{width:100%}
     }
+
+    /* ===== Screenshots: always show the whole image, never cropped ===== */
+    .project-visual.has-shot{height:auto}
+    .project-visual.has-shot .shot-zoom,.project-visual.has-shot .flow-preview{flex:none;width:100%;height:auto;aspect-ratio:16/9}
+    .project-visual.has-shot .shot-zoom img{width:100%;height:100%;max-width:none;max-height:none;object-fit:contain;object-position:center}
+    #shot-lead .shot-zoom img,#shot-kaleemgpt .shot-zoom img{object-position:center}
+    .browser img{object-fit:contain;object-position:center;background:#0d1114}
+    /* ===== Screenshot tabs inside a project card (KaleemGPT) ===== */
+    .shot-tabs{display:inline-flex;flex-wrap:wrap;gap:5px}
+    .shot-tab{min-height:32px;background:transparent;border:1px solid var(--border-strong);color:#a9bab2;border-radius:999px;padding:6px 11px;font:700 11px/1.2 var(--font-body);letter-spacing:.02em;text-transform:none;transition:background .2s,border-color .2s,color .2s}
+    .shot-tab[aria-pressed="true"],.shot-tab:hover{background:var(--green);border-color:var(--green);color:#0b1a14}
+    .shot-zoom img.fading{opacity:.25}
+    .project-visual.has-shot .shot-zoom img{transition:opacity .2s}
+    @media(max-width:600px){.shot-tab{min-height:40px;padding:9px 14px;font-size:12px}}
   </style>
 </head>
 <body>
@@ -719,7 +750,7 @@
           <!-- ===== PROJECT: Classroom Assignment Checker — END ===== -->
           <!-- ===== PROJECT: KaleemGPT — START ===== -->
           <article class="project-card reveal" id="project-kaleemgpt">
-            <div class="project-visual has-shot" id="shot-kaleemgpt"><div class="visual-type"><span class="vt-tabs" role="group" aria-label="Choose view"><button type="button" class="vt-tab" data-view="shot" aria-pressed="true">Result</button></span><span class="vt-label" hidden>Real screenshot · Web app</span><span class="zoom-hint">Click to enlarge</span></div><button type="button" class="shot-zoom" aria-label="View KaleemGPT screenshot full size"><img src="images/kaleemgpt-welcome.webp" width="1365" height="642" alt="KaleemGPT welcome screen with chat history, suggested prompts and a model picker"></button></div>
+            <div class="project-visual has-shot" id="shot-kaleemgpt"><div class="visual-type"><span class="shot-tabs" role="group" aria-label="KaleemGPT screenshots"><button type="button" class="shot-tab" aria-pressed="true" data-src="images/kaleemgpt-welcome.webp" data-alt="KaleemGPT welcome screen with chat history, suggested prompts and a model picker">Home</button><button type="button" class="shot-tab" aria-pressed="false" data-src="images/kaleemgpt-chat.webp" data-alt="KaleemGPT answering a weather question with live web search">Web search</button><button type="button" class="shot-tab" aria-pressed="false" data-src="images/kaleemgpt-models.webp" data-alt="KaleemGPT model picker with GPT-OSS and Gemini models">Models</button></span></div><button type="button" class="shot-zoom" aria-label="View KaleemGPT screenshot full size"><img src="images/kaleemgpt-welcome.webp" width="1365" height="642" alt="KaleemGPT welcome screen with chat history, suggested prompts and a model picker"></button></div>
             <div class="project-info"><div class="project-index"><span>PROJECT / 004</span><span class="tag">AI Agent</span></div><h3>KaleemGPT</h3><p>A ChatGPT-style assistant built on a LangGraph agent: it searches the web, answers from your uploaded documents, remembers you across chats, and switches between five models.</p><div class="result-line"><b>RESULT</b>Shipped as a Docker image to AWS EC2 through a GitHub Actions pipeline: lint, test, build, deploy.</div><div class="project-stack"><span class="stack-tag">FastAPI</span><span class="stack-tag">LangGraph</span><span class="stack-tag">ChromaDB</span><span class="stack-tag">Groq · Gemini</span><span class="stack-tag">Docker</span><span class="stack-tag">AWS EC2</span></div>
               <div class="project-links" style="margin-bottom:18px"><a class="btn btn-secondary" data-link="kaleemgpt.live" hidden>Live demo</a><a class="btn btn-secondary" data-link="kaleemgpt.github" hidden>GitHub</a></div>
               <button type="button" class="project-open" data-project="kaleemgpt">How it works <span class="arrow" aria-hidden="true">↗</span></button></div>
@@ -747,10 +778,16 @@
         <div class="all-projects"><a href="#all-projects" class="btn btn-secondary">View all projects <span class="arrow" aria-hidden="true">→</span></a></div>
       </div>
     </section>
-    <!-- ===== ALL PROJECTS (filterable list; edit the ALL_PROJECTS list in the <script> near the end) ===== -->
-    <section class="section ap-section" id="all-projects" aria-labelledby="all-projects-title">
-      <div class="container">
-        <div class="section-intro reveal"><div><span class="section-kicker">ALL PROJECTS</span><h2 id="all-projects-title">Everything I've<br><span style="color:var(--green)">built.</span></h2></div><p>AI agents, WhatsApp assistants and automations, each one solving a real problem. Filter by type or search by tool.</p></div>
+    <!-- ===== ALL PROJECTS PAGE — shown on its own (instead of the home sections) at index.html#all-projects.
+         To add a project, edit the ALL_PROJECTS list in the <script> near the end. ===== -->
+    <section class="ap-page" id="all-projects" aria-labelledby="all-projects-title">
+      <div class="ap-intro">
+        <div class="container" style="position:relative">
+          <a class="ap-back" href="#projects"><span aria-hidden="true">←</span> Back to home</a>
+          <span class="section-kicker">All projects</span>
+          <h1 id="all-projects-title">Everything I've <em>built.</em></h1>
+          <p>AI agents, WhatsApp assistants and automations, each one solving a real problem. Filter by type or search by tool.</p>
+        </div>
       </div>
       <div class="ap-toolbar">
         <div class="container ap-toolbar-inner">
@@ -764,6 +801,14 @@
       <div class="container">
         <p class="ap-results" id="ap-results" aria-live="polite"></p>
         <div class="ap-grid" id="ap-grid"></div>
+      </div>
+      <div class="ap-cta">
+        <div class="container">
+          <div class="ap-cta-box">
+            <div><h2>Have something like this <em>in mind?</em></h2><p>Tell me about the workflow that's eating your time. I'll suggest how to automate it.</p></div>
+            <a href="#contact" class="btn btn-primary">Get in touch <span class="arrow" aria-hidden="true">↗</span></a>
+          </div>
+        </div>
       </div>
     </section>
     <section class="testimonial-section" id="testimonial" hidden aria-label="Client feedback"><div class="container">
@@ -875,6 +920,21 @@
     b.textContent = TESTIMONIAL.name; by.append(b, TESTIMONIAL.role ? ' · ' + TESTIMONIAL.role : '');
     document.getElementById('testimonial').hidden = false;
   }
+
+  // Screenshot tabs on a project card (e.g. KaleemGPT): each tab swaps the screenshot
+  document.querySelectorAll('.shot-tabs').forEach(group => {
+    const img = group.closest('.project-visual').querySelector('.shot-zoom img'); if (!img) return;
+    const tabs = [...group.querySelectorAll('.shot-tab')];
+    tabs.forEach(tab => {
+      const pre = new Image(); pre.src = tab.dataset.src;
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.setAttribute('aria-pressed', String(t === tab)));
+        if (img.getAttribute('src') === tab.dataset.src) return;
+        img.classList.add('fading');
+        setTimeout(() => { img.src = tab.dataset.src; img.alt = tab.dataset.alt || ''; img.classList.remove('fading'); }, 150);
+      });
+    });
+  });
 
   // Cinephile screenshot gallery
   (function gallery(){
@@ -1226,6 +1286,7 @@
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => seen.set(e.target.id, e.isIntersecting ? e.intersectionRect.height : 0));
       let best = null, max = 0; seen.forEach((h, id) => { if (h > max) { max = h; best = id; } });
+      if (document.documentElement.classList.contains('view-projects')) best = 'projects';
       links.forEach(a => { const on = best && a === map.get(best); a.classList.toggle('active', !!on); if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current'); });
     }, {threshold:[0,.1,.25,.5,.75,1], rootMargin:'-80px 0px -35% 0px'});
     secs.forEach(sec => io.observe(sec));
@@ -1247,8 +1308,7 @@
   //
   //  TO ADD A PROJECT: copy one block from { to }, paste it at the end of the
   //  list (keep the comma between blocks) and fill it in.
-  //   • key       short id, no spaces. index.html#key opens it directly.
-  //               (Don't reuse a section id: home, services, projects, stack, about, contact.)
+  //   • key       short id, no spaces. index.html#all-projects/key opens it directly.
   //   • category  becomes a filter button automatically (reuse a name to group).
   //   • image     a file in the images/ folder, e.g. 'images/invoicebot.png'.
   //               Leave '' and the card shows a clean placeholder.
@@ -1441,19 +1501,41 @@
       document.getElementById('ap-d-steps-wrap').hidden = !(p.steps || []).length;
       document.getElementById('ap-d-stack').replaceChildren(...(p.stack || []).map(s => el('span', 'ap-tag', s)));
       document.getElementById('ap-d-links').replaceChildren(...linkButtons(p));
-      if (history.replaceState) history.replaceState(null, '', '#' + p.key);
+      if (history.replaceState) history.replaceState(null, '', '#all-projects/' + p.key);
       dlg.showModal(); dlg.scrollTop = 0;
     }
     const close = () => dlg.close();
     document.getElementById('ap-d-close').addEventListener('click', close);
     document.getElementById('ap-d-contact').addEventListener('click', close);
     dlg.addEventListener('click', e => { if (e.target === dlg) close(); });
-    dlg.addEventListener('close', () => { if (history.replaceState && ALL_PROJECTS.some(p => '#' + p.key === location.hash)) history.replaceState(null, '', location.pathname + location.search); });
+    dlg.addEventListener('close', () => { if (history.replaceState && location.hash.indexOf('#all-projects/') === 0) history.replaceState(null, '', '#all-projects'); });
 
     render();
-    // index.html#kaleemgpt (or an old projects.html#kaleemgpt link) opens that project directly
-    const fromHash = ALL_PROJECTS.find(p => '#' + p.key === location.hash);
-    if (fromHash) { document.getElementById('all-projects').scrollIntoView(); open(fromHash); }
+
+    // ----- page switching: #all-projects shows the projects page, any other link shows the home page -----
+    const root = document.documentElement, homeTitle = document.title, pageTitle = 'All projects — Kaleem Rehman';
+    const jump = y => window.scrollTo({ top: y, behavior: 'instant' });
+    function route(){
+      const hash = location.hash, onPage = hash.indexOf('#all-projects') === 0;
+      const wasOnPage = root.classList.contains('view-projects');
+      root.classList.toggle('view-projects', onPage);
+      document.title = onPage ? pageTitle : homeTitle;
+      if (onPage) {
+        if (!wasOnPage) jump(0);
+        const p = ALL_PROJECTS.find(x => x.key === hash.split('/')[1]);
+        if (p && !dlg.open) open(p);
+      } else {
+        if (dlg.open) dlg.close();
+        if (wasOnPage) { const target = hash.length > 1 && document.getElementById(hash.slice(1));
+          if (target) target.scrollIntoView({ behavior: 'instant' }); else jump(0); }
+      }
+    }
+    window.addEventListener('hashchange', route);
+    route();
+    // "Back to top" in the footer stays on the current page
+    document.querySelectorAll('.to-top[href="#home"]').forEach(a => a.addEventListener('click', e => {
+      if (root.classList.contains('view-projects')) { e.preventDefault(); window.scrollTo({ top: 0 }); }
+    }));
   })();
   </script>
 </body>

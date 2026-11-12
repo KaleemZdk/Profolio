@@ -66,21 +66,25 @@ Project cards can switch between **Result** (screenshot) and **n8n workflow** (a
 Clicking the diagram opens a full-screen viewer: zoom, drag to pan, and click any step to read what it does.
 The diagrams are built only from node names, types and connections — no credentials, IDs or API keys are included.
 
-## All projects section (inside `index.html`)
+## All projects page (inside `index.html`)
 
-The full project list lives in `index.html`, in the **All projects** section (`index.html#all-projects`),
-with filters by type, search by name or tool, and a details pop-up for each one.
-The "View all projects" button under the featured projects and the footer link both jump to it.
-`projects.html` is now only a redirect, so old links like `projects.html#kaleemgpt` still work.
+The whole site is one file. The home page shows only your chosen projects (the "Selected work" section).
+The full list is a separate page inside the same file, at `index.html#all-projects`: when that link is opened,
+the home sections are hidden and only the projects page is shown, with filters by type, search by name or tool,
+and a details pop-up for each project. The "View all projects" button and the footer link open it, and
+"Back to home" (or any menu link) returns to the home page.
 
 **To add a project:** open `index.html`, find the `ALL_PROJECTS` list near the end (inside `<script>`), copy one `{ ... }` block,
 paste it at the end of the list (keep the comma between blocks) and fill it in. The comments above the list explain each field.
 - Put the screenshot in the `images/` folder and set `image: 'images/your-file.png'`. Leave it empty for a clean placeholder.
 - `category` becomes a filter button automatically, so reuse a name to group projects together.
 - Empty links stay hidden, and empty Problem / Solution / Result / steps are left out of the pop-up.
-- `index.html#key` opens that project's details directly, which is handy for sending a client one project.
+- `index.html#all-projects/key` (e.g. `index.html#all-projects/kaleemgpt`) opens that project's details directly, which is handy for sending a client one project.
 
-When publishing, upload the `images/` folder together with `index.html` (and `projects.html` if you want old links to keep working).
+When publishing, upload the `images/` folder together with `index.html`.
+
+**Screenshot tabs on a home card:** the KaleemGPT card has Home / Web search / Models buttons that swap its screenshot.
+To do the same on another card, copy its `<span class="shot-tabs">…</span>` block and set each button's `data-src` (image) and `data-alt` (description).
 
 ## Adding a new project
 
