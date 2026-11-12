@@ -1,0 +1,338 @@
+{
+ "Run Manually": {
+  "label": "Run now",
+  "sub": "Manual trigger",
+  "desc": "Lets the professor start a grading run on demand."
+ },
+ "Every 6 Hours": {
+  "label": "Every 6 hours",
+  "sub": "Schedule",
+  "desc": "Runs automatically every 6 hours, so new submissions get graded without anyone pressing a button."
+ },
+ "Config": {
+  "label": "Settings",
+  "sub": "Set",
+  "desc": "One place to set the course, results sheet, Gemini model, grading rubric, allowed AI-use percentage and how many submissions to grade per run."
+ },
+ "Create Guides Tab": {
+  "label": "Create Guides tab",
+  "sub": "Google Sheets API",
+  "desc": "Makes sure the spreadsheet has a Guides tab (skips quietly if it already exists).",
+  "kind": "sheets"
+ },
+ "Write Guides Header": {
+  "label": "Write sheet headers",
+  "sub": "Google Sheets API",
+  "desc": "Writes the column headers for the Guides and Results tabs.",
+  "kind": "sheets"
+ },
+ "Read Graded Rows": {
+  "label": "Read graded rows",
+  "sub": "Google Sheets",
+  "desc": "Loads everything already graded, so no submission is ever graded twice."
+ },
+ "Read Guides": {
+  "label": "Read saved guides",
+  "sub": "Google Sheets",
+  "desc": "Loads the grading guides already built for each assignment."
+ },
+ "Get Assignments": {
+  "label": "Get assignments",
+  "sub": "Google Classroom API",
+  "desc": "Fetches every assignment in the course, page by page.",
+  "kind": "http"
+ },
+ "Get Students": {
+  "label": "Get students",
+  "sub": "Google Classroom API",
+  "desc": "Fetches the class list so each submission is matched to the right student.",
+  "kind": "http"
+ },
+ "Get Submissions": {
+  "label": "Get submissions",
+  "sub": "Google Classroom API",
+  "desc": "Fetches all turned-in submissions.",
+  "kind": "http"
+ },
+ "Build Submission List": {
+  "label": "Build submission list",
+  "sub": "Code",
+  "desc": "Combines submissions with student and assignment details, and skips anything already in the Results sheet."
+ },
+ "Find Missing Guides": {
+  "label": "Find missing guides",
+  "sub": "Code",
+  "desc": "Checks which assignments don't have a grading guide yet. A guide is built once per assignment and reused for every student — that keeps AI costs low."
+ },
+ "Need Guide?": {
+  "label": "New guide needed?",
+  "sub": "IF",
+  "desc": "Builds a guide only for assignments that don't have one yet.",
+  "outLabels": [
+   "yes",
+   "no"
+  ]
+ },
+ "Find Answer Key": {
+  "label": "Find answer key",
+  "sub": "Google Drive API",
+  "desc": "Looks in the professor's private Drive folder for an answer key that matches the assignment name.",
+  "kind": "drive"
+ },
+ "Expand Guide Files": {
+  "label": "Collect guide files",
+  "sub": "Code",
+  "desc": "Gathers the assignment's question files plus the best-matching answer key."
+ },
+ "Get Guide File Info": {
+  "label": "Check file types",
+  "sub": "Google Drive API",
+  "desc": "Reads each file's type so only Google Docs and PDFs are used.",
+  "kind": "drive"
+ },
+ "Download Guide File": {
+  "label": "Download files",
+  "sub": "Google Drive API",
+  "desc": "Downloads the question paper and answer key (Google Docs are exported as PDF).",
+  "kind": "drive"
+ },
+ "Build Guide Requests": {
+  "label": "Prepare guide prompt",
+  "sub": "Code",
+  "desc": "Builds one Gemini request per assignment, with the questions, answer key and the professor's rubric attached."
+ },
+ "Generate Guide": {
+  "label": "Generate grading guide",
+  "sub": "Gemini API",
+  "desc": "Gemini writes a compact marking guide: marks per question, key points for full marks and common mistakes. Retries automatically if it fails.",
+  "kind": "model"
+ },
+ "Format Guide Row": {
+  "label": "Format guide",
+  "sub": "Code",
+  "desc": "Turns Gemini's answer into a row for the Guides tab; failures are marked so they're retried on the next run."
+ },
+ "Save Guides": {
+  "label": "Save guide",
+  "sub": "Google Sheets",
+  "desc": "Saves the guide to the Guides tab. The professor can edit it, and the edited version is used from the next run."
+ },
+ "Continue to Grading": {
+  "label": "Start grading",
+  "sub": "Code",
+  "desc": "Waits until any new guides are ready, then starts grading once."
+ },
+ "Attach Guides": {
+  "label": "Attach guide",
+  "sub": "Code",
+  "desc": "Adds the right grading guide to every pending submission."
+ },
+ "Has File?": {
+  "label": "File attached?",
+  "sub": "IF",
+  "desc": "Checks that the student actually attached a file.",
+  "outLabels": [
+   "yes",
+   "no"
+  ]
+ },
+ "Get File Metadata": {
+  "label": "Check file type",
+  "sub": "Google Drive API",
+  "desc": "Reads the attached file's type and size.",
+  "kind": "drive"
+ },
+ "Route by File Type": {
+  "label": "Route by file type",
+  "sub": "Switch",
+  "desc": "Sends each file down the right path: Google Docs, PDFs and Word files are all turned into PDFs for the AI; anything else goes to manual review.",
+  "outLabels": [
+   "Google Doc",
+   "PDF",
+   "Word / text",
+   "other"
+  ]
+ },
+ "Export Google Doc as PDF": {
+  "label": "Export Doc as PDF",
+  "sub": "Google Drive API",
+  "desc": "Converts a Google Doc submission to PDF.",
+  "kind": "drive"
+ },
+ "Download PDF": {
+  "label": "Download PDF",
+  "sub": "Google Drive API",
+  "desc": "Downloads a PDF submission as-is.",
+  "kind": "drive"
+ },
+ "Convert Word to Google Doc": {
+  "label": "Convert Word file",
+  "sub": "Google Drive API",
+  "desc": "Makes a temporary Google Doc copy of a Word or text file so it can be exported as PDF.",
+  "kind": "drive"
+ },
+ "Export Converted as PDF": {
+  "label": "Export as PDF",
+  "sub": "Google Drive API",
+  "desc": "Exports the converted copy as a PDF.",
+  "kind": "drive"
+ },
+ "Delete Temp Copy": {
+  "label": "Delete temp copy",
+  "sub": "Google Drive API",
+  "desc": "Deletes the temporary copy so the professor's Drive stays tidy.",
+  "kind": "drive"
+ },
+ "Manual Review Row": {
+  "label": "Flag for manual review",
+  "sub": "Code",
+  "desc": "Missing or unsupported files still get a row marked “Needs manual review”, so no student is ever missed."
+ },
+ "Build Gemini Request": {
+  "label": "Prepare grading request",
+  "sub": "Code",
+  "desc": "Sends Gemini only the short grading guide plus the student's PDF, and asks for structured results: score, remarks, strengths, improvements, flags and an AI-use estimate — with strict rules to avoid wrongly accusing students."
+ },
+ "Check with Gemini": {
+  "label": "Grade with Gemini",
+  "sub": "Gemini API",
+  "desc": "Gemini marks the submission. Requests are spaced out to respect rate limits and retried automatically on failure.",
+  "kind": "model"
+ },
+ "Format Graded Row": {
+  "label": "Score & grade",
+  "sub": "Code",
+  "desc": "Works out the percentage and letter grade, applies the AI-use policy (flag, or deduct marks above the allowed %), and builds the results row."
+ },
+ "Save to Results Sheet": {
+  "label": "Save to Results",
+  "sub": "Google Sheets",
+  "desc": "Adds every graded submission to the Results tab."
+ },
+ "Group by Assignment": {
+  "label": "Group by assignment",
+  "sub": "Code",
+  "desc": "Groups the new results by assignment."
+ },
+ "Create Assignment Tab": {
+  "label": "Create assignment tab",
+  "sub": "Google Sheets API",
+  "desc": "Creates a separate tab for each assignment if it doesn't exist yet.",
+  "kind": "sheets"
+ },
+ "Prepare Tab Rows": {
+  "label": "Prepare tab rows",
+  "sub": "Code",
+  "desc": "Adds a header row when a tab is brand new."
+ },
+ "Append to Assignment Tab": {
+  "label": "Append to assignment tab",
+  "sub": "Google Sheets API",
+  "desc": "Copies the results into that assignment's own tab, so the professor can review one assignment at a time.",
+  "kind": "sheets"
+ },
+ "Find Course & Assignment IDs": {
+  "label": "Find course IDs",
+  "sub": "Manual trigger",
+  "desc": "A one-time helper the professor runs to find the course and assignment IDs to paste into Settings."
+ },
+ "List My Courses": {
+  "label": "List my courses",
+  "sub": "Google Classroom API",
+  "desc": "Lists the professor's active courses.",
+  "kind": "http"
+ },
+ "Split Courses": {
+  "label": "Split courses",
+  "sub": "Code",
+  "desc": "Turns the course list into one item per course."
+ },
+ "List Course Assignments": {
+  "label": "List assignments",
+  "sub": "Google Classroom API",
+  "desc": "Lists the assignments in each course.",
+  "kind": "http"
+ },
+ "Show IDs": {
+  "label": "Show IDs",
+  "sub": "Code",
+  "desc": "Shows every course and assignment with the ID to copy into Settings."
+ },
+ "__stages__": [
+  {
+   "title": "1 · Start & load what's already done",
+   "nodes": [
+    "Run Manually",
+    "Every 6 Hours",
+    "Config",
+    "Create Guides Tab",
+    "Write Guides Header",
+    "Read Graded Rows",
+    "Read Guides"
+   ]
+  },
+  {
+   "title": "2 · Find new submissions",
+   "nodes": [
+    "Get Assignments",
+    "Get Students",
+    "Get Submissions",
+    "Build Submission List",
+    "Find Missing Guides",
+    "Need Guide?"
+   ]
+  },
+  {
+   "title": "3 · Build a grading guide — once per assignment",
+   "nodes": [
+    "Find Answer Key",
+    "Expand Guide Files",
+    "Get Guide File Info",
+    "Download Guide File",
+    "Build Guide Requests",
+    "Generate Guide",
+    "Format Guide Row",
+    "Save Guides"
+   ]
+  },
+  {
+   "title": "4 · Turn every submission into a PDF",
+   "nodes": [
+    "Continue to Grading",
+    "Attach Guides",
+    "Has File?",
+    "Get File Metadata",
+    "Route by File Type",
+    "Export Google Doc as PDF",
+    "Download PDF",
+    "Convert Word to Google Doc",
+    "Export Converted as PDF",
+    "Delete Temp Copy",
+    "Manual Review Row"
+   ]
+  },
+  {
+   "title": "5 · Grade with Gemini & save results",
+   "nodes": [
+    "Build Gemini Request",
+    "Check with Gemini",
+    "Format Graded Row",
+    "Save to Results Sheet",
+    "Group by Assignment",
+    "Create Assignment Tab",
+    "Prepare Tab Rows",
+    "Append to Assignment Tab"
+   ]
+  },
+  {
+   "title": "Setup helper · find course & assignment IDs",
+   "nodes": [
+    "Find Course & Assignment IDs",
+    "List My Courses",
+    "Split Courses",
+    "List Course Assignments",
+    "Show IDs"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,15 @@
+{
+ "Webhook": {"label":"WhatsApp message in","sub":"Webhook · Twilio","desc":"Twilio forwards every incoming WhatsApp message from a lead to this webhook — this is what starts the workflow."},
+ "Respond to Webhook": {"label":"Acknowledge Twilio","sub":"Respond to Webhook","desc":"Replies to Twilio instantly, so the request never times out while the AI is still thinking."},
+ "Extract Fields": {"label":"Extract lead details","sub":"Set","desc":"Pulls the lead's phone number, WhatsApp name and message text out of the incoming payload."},
+ "AI Agent": {"label":"AI qualification agent","sub":"AI Agent","desc":"Has a natural conversation and asks one question at a time: buy or rent, area, budget, timeline and financing. Retries automatically up to 3 times if the model fails."},
+ "Google Gemini Chat Model": {"label":"Gemini","sub":"Chat model","desc":"The language model that powers the agent's replies."},
+ "Simple Memory": {"label":"Conversation memory","sub":"Per phone number","desc":"Remembers each lead's chat history, keyed by their phone number, so the bot never asks the same question twice."},
+ "Code in JavaScript": {"label":"Parse & score lead","sub":"Code","desc":"Reads the agent's reply, extracts the collected answers as structured data, and scores the lead HOT / WARM / COLD using budget and timeline rules."},
+ "Send an SMS/MMS/WhatsApp message": {"label":"Reply to lead","sub":"Twilio · WhatsApp","desc":"Sends the agent's reply back to the lead on WhatsApp — usually within about 10 seconds."},
+ "If": {"label":"Qualified?","sub":"IF","desc":"Continues only once all the qualifying answers have been collected."},
+ "Append or update row in sheet": {"label":"Save lead","sub":"Google Sheets","desc":"Adds the lead to the Leads sheet (or updates their row, matched by phone number) with every answer, the score and status."},
+ "If1": {"label":"HOT lead?","sub":"IF","desc":"Checks whether the lead scored HOT."},
+ "Send an SMS/MMS/WhatsApp message2": {"label":"Alert the agent","sub":"Twilio · WhatsApp","desc":"Instantly sends the agent a 🔥 HOT LEAD message with the lead's name, area, budget and timeline."},
+ "Send an SMS/MMS/WhatsApp message1": {"label":"Fallback reply","sub":"Twilio · WhatsApp","desc":"If the AI fails even after retries, the lead still gets a polite “give me a moment” message instead of silence."}
+}
