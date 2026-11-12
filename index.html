@@ -1265,11 +1265,12 @@
 
   const toast=document.getElementById('toast');let toastTimeout;
   function notify(message){toast.textContent=message;toast.classList.add('show');clearTimeout(toastTimeout);toastTimeout=setTimeout(()=>toast.classList.remove('show'),4200);}
+  // Email opens a Gmail compose window (new tab) with the address and subject filled in
   const contactDestination = kind => kind==='email' && CONTACT.email
-      ? `mailto:${CONTACT.email}?subject=${encodeURIComponent('AI Automation Project Inquiry')}` : CONTACT[kind];
+      ? `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(CONTACT.email)}&su=${encodeURIComponent('AI Automation Project Inquiry')}` : CONTACT[kind];
   document.querySelectorAll('.contact-action').forEach(link=>{
     const kind=link.dataset.contact;const destination=contactDestination(kind);
-    if(destination){link.href=destination;if(kind!=='email'){link.target='_blank';link.rel='noopener noreferrer';}}
+    if(destination){link.href=destination;link.target='_blank';link.rel='noopener noreferrer';link.title=kind==='email'?CONTACT.email:'';}
     else link.style.display='none'; // no link set for this contact yet, so don't show the button
   });
   if(Object.values(CONTACT).every(x=>!x.trim())){
