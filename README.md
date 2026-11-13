@@ -67,6 +67,13 @@ e.g. `https://yourname.github.io/images/og-image.png` — LinkedIn and WhatsApp 
   GitHub Actions) floating around the hero photo. They come from the free Simple Icons set (simpleicons.org);
   to swap one, copy its SVG path from there into the `tool-icons` block in `index.html`.
 
+## Colours
+
+The site uses a bright emerald theme: deep green background, an electric green accent (`#3CF2A6`),
+lime for gradients and small highlights (`#C8FF4D`) and amber for "Featured" badges (`#FFC93C`).
+The main accents are set as CSS variables in the "Bright & energetic theme" block at the end of the `<style>` section,
+so changing `--green`, `--lime` or `--amber` there recolours the buttons, headline gradients and highlights.
+
 ## Interactive n8n workflows
 
 Project cards can switch between **Result** (screenshot) and **n8n workflow** (an interactive diagram generated from the real workflow export).
