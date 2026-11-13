@@ -59,6 +59,13 @@ e.g. `https://yourname.github.io/images/og-image.png` — LinkedIn and WhatsApp 
 - Featured Cinephile case study (Problem → Solution → Result) plus two project cards
 - Project detail dialogs, tool-stack filters, accessible mobile menu
 - Photo slot with "Available for new projects" badge
+- Services grouped by outcome: "Win more customers" and "Save hours every week"
+- "How I work" section: a layered diagram (your tools → automations → AI agents → optional app),
+  "Your data stays yours" and "You work with me directly". Edit the four data promises in that section
+  so they match exactly how you work.
+- Logos of the tools you build with (n8n, HubSpot, Python, FastAPI, Docker, Supabase, PostgreSQL, Google Sheets,
+  GitHub Actions) floating around the hero photo. They come from the free Simple Icons set (simpleicons.org);
+  to swap one, copy its SVG path from there into the `tool-icons` block in `index.html`.
 
 ## Interactive n8n workflows
 
